@@ -6,19 +6,17 @@ const express = require('express');
 
 // Start up an instance of app
 const app = express();
-//const reload = require('livereload');
-// app.use(reload);
 
 /* Middleware*/
 //Here we are configuring express to use body-parser as middle-ware.
 
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// bodyParser is deprecated, using new express method...
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// bodyParser is deprecated, should use new express method...
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 
 // Cors for cross origin allowance
 const cors = require('cors');
@@ -34,27 +32,24 @@ const port = 3000;
 const server = app.listen(port, () => {
     console.log(`running on localhost: ${port}`);
 });
-// reload(app);
-// var livereload = require('livereload');
-// var lrserver = livereload.createServer();
-// lrserver.watch(__dirname + "/website");
 
-
-// GET route
+// GET route to retrieve all data from projectData
 app.get('/all', (request, response) => {
     response.send(projectData);
 });
 
+// POST route to add data from the client
+// and save it to projectData
 app.post('/addData', (request, response) => {
     let newEntry = {
-        //key: 1,
         temperature: request.body.temperature,
         date: request.body.date,
         userResponse: request.body.userResponse,
     };
 
+    // push it to the array
     projectData.push(newEntry);
 
-    console.log(newEntry);
+    // return the new entry added
     response.send(newEntry);
 });

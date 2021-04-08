@@ -4,7 +4,8 @@ let generateButton = document.querySelector('#generate');
 const apiKey = '16ea4ef88107d12dde737e969b660f97';
 // Replace {apiKey} with the apiKey as well as {zipCode}
 // see getWeatherData method
-const baseUrl = `http://api.openweathermap.org/data/2.5/weather?appid={apiKey}&zip={zipCode}`;
+// also using units=imperial to return Fahrenheit
+const baseUrl = `http://api.openweathermap.org/data/2.5/weather?units=imperial&appid={apiKey}&zip={zipCode}`;
 
 // get/fetch data from OpenWeatherMap using zip code
 const getWeatherData = async (baseUrl = '', apiKey, zipCode) => {
@@ -68,7 +69,9 @@ const updateUI = async (recentData) => {
         const contentElement = document.querySelector('#content');
 
         // set element values and add <br> to the end
-        tempElement.innerHTML = lastItem.temperature + '<br>';
+        // &#176; is the temperature degree symbol
+        // F for Fahrenheit
+        tempElement.innerHTML = lastItem.temperature + ' &#176;F <br>';
         dateElement.innerHTML = lastItem.date + '<br>';
         // innerText to handle new lines
         contentElement.innerText = lastItem.userResponse;
