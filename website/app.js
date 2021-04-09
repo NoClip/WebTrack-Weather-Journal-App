@@ -58,10 +58,7 @@ const updateUI = async (recentData) => {
     const request = await fetch('/all');
     try {
         // convert it to JSON
-        const allData = await request.json();
-
-        // get the last/recent item
-        let lastItem = allData[allData.length - 1];
+        const data = await request.json();
 
         // get elements temp, date, and content
         const tempElement = document.querySelector('#temp');
@@ -71,10 +68,11 @@ const updateUI = async (recentData) => {
         // set element values and add <br> to the end
         // &#176; is the temperature degree symbol
         // F for Fahrenheit
-        tempElement.innerHTML = lastItem.temperature + ' &#176;F <br>';
-        dateElement.innerHTML = lastItem.date + '<br>';
+        console.log(data);
+        tempElement.innerHTML = data.temperature + ' &#176;F <br>';
+        dateElement.innerHTML = data.date + '<br>';
         // innerText to handle new lines
-        contentElement.innerText = lastItem.userResponse;
+        contentElement.innerText = data.userResponse;
     } catch (error) {
         console.log("error", error);
     }
